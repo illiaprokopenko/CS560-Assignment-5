@@ -11,6 +11,8 @@ private:
 	size_t _currentIndex = 0;
 	bool isDouble(std::string token);
 	bool isVariable(std::string token);
+	bool isFunction(std::string token);
+	AstNode* createFunction();
 public:
 	Parser(std::vector<std::string> tokens);
 	std::string Peek();

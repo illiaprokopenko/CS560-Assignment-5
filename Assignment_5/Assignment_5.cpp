@@ -6,9 +6,9 @@
 
 int main()
 {
-    std::string line = "12 + 25 * 4";
-    std::string line2 = "var a = 115";
-    std::string lin3 = "a / 5";
+    std::string line = "12 + (-25) * 4";
+    std::string line2 = "var a = pow(max(2, 1 * 2), min(2 * 2, 12 - 4))";
+    std::string lin3 = "a / 2";
     std::vector<std::string> test = TokenManager::BreakToTokens(line);
     std::vector<std::string> test2 = TokenManager::BreakToTokens(line2);
     std::vector<std::string> test3 = TokenManager::BreakToTokens(lin3);

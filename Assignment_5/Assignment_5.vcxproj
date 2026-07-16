@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Assignment_5.cpp" />
     <ClCompile Include="BinaryOpNode.cpp" />
+    <ClCompile Include="FunctionNode.cpp" />
     <ClCompile Include="NumberNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="TokenManager.cpp" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="AstNode.h" />
     <ClInclude Include="BinaryOpNode.h" />
+    <ClInclude Include="FunctionNode.h" />
     <ClInclude Include="NumberNode.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="TokenManager.h" />

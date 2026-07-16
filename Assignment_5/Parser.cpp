@@ -3,6 +3,7 @@
 # include "VariableNode.h"
 # include "NumberNode.h"
 # include "BinaryOpNode.h"
+# include "FunctionNode.h"
 # include <cctype>
 # include <stdexcept>
 
@@ -36,6 +37,11 @@ bool Parser::isVariable(std::string token)
 	return true;
 }
 
+bool Parser::isFunction(std::string token)
+{
+	return isVariable(token) && _currentIndex + 1 < _tokens.size() && _tokens[_currentIndex + 1] == "(";
+}
+
 bool Parser::isDouble(std::string token)
 {
 	try 
@@ -51,6 +57,31 @@ bool Parser::isDouble(std::string token)
 	}
 }
 
+AstNode* Parser::createFunction()
+{
+	std::string funcName = GetCurrent();
+	_currentIndex++;
+	std::vector<AstNode*> arguments;
+	if (Peek() == ")")
+	{
+		throw std::runtime_error("Number of arguments is not enogph");
+	}
+	while (Peek() != ")")
+	{
+		AstNode* argument = ParseExpression();
+		arguments.push_back(argument);
+		if (Peek() == ",")
+		{
+			_currentIndex++;
+			continue;
+		}
+	}
+	_currentIndex++;
+	
+	AstNode* res = new FunctionNode(funcName, arguments);
+	return res;
+}
+
 AstNode* Parser::Parse(VariableTable& environment)
 {
 	if (Peek() == "var")
@@ -60,7 +91,7 @@ AstNode* Parser::Parse(VariableTable& environment)
 		
 		if (!match("="))
 		{
-			std::runtime_error("Exptected '=' afte var");
+			throw std::runtime_error("Exptected '=' after var");
 		}
 
 		AstNode* variableDef = ParseExpression();
@@ -112,6 +143,10 @@ AstNode* Parser::ParseFactor()
 		double num = std::stod(GetCurrent());
 		AstNode* number = new NumberNode(num);
 		return number;
+	}
+	else if (isFunction(token))
+	{
+		return createFunction();
 	}
 	else if (isVariable(token))
 	{
